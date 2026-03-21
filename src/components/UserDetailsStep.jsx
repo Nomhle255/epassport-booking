@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const UserDetailsStep = ({ onNext, onBack }) => {
+const UserDetailsStep = ({ onNext, onBack, isSubmitting = false }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [nationalId, setNationalId] = useState("");
@@ -43,9 +43,9 @@ const UserDetailsStep = ({ onNext, onBack }) => {
         </button>
         <button
           onClick={handleNext}
-          disabled={!name || !phone || !nationalId}
+          disabled={!name || !phone || !nationalId || isSubmitting}
         >
-          Confirm Booking
+          {isSubmitting ? "Saving..." : "Confirm Booking"}
         </button>
       </div>
     </div>
