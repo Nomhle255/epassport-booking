@@ -179,7 +179,8 @@ const Booking = () => {
             Time: {time} <br />
             Slot ID: {slotId} <br />
             Name: {userDetails.name} <br />
-            Phone: {userDetails.phone}
+            Phone: {userDetails.phone} <br />
+            Country: {userDetails.country}
           </p>
           <p>Thank you for booking your appointment online!</p>
         </div>
