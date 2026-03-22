@@ -11,10 +11,22 @@ import {
 import { db } from "../firebase/config";
 
 const AdminDashboard = () => {
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  // Helper function to format date as local YYYY-MM-DD string
+  const formatLocalDate = (dateInput) => {
+    if (typeof dateInput === "string") return dateInput;
+    const year = dateInput.getFullYear();
+    const month = String(dateInput.getMonth() + 1).padStart(2, "0");
+    const day = String(dateInput.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const today = new Date();
+  const localDateStr = formatLocalDate(today);
+  const [date, setDate] = useState(localDateStr);
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [serviceFilter, setServiceFilter] = useState("");
 
   const loadAppointments = async () => {
     setLoading(true);
@@ -53,6 +65,25 @@ const AdminDashboard = () => {
     return usage;
   }, [appointments]);
 
+  const filteredAppointments = useMemo(() => {
+    if (!serviceFilter) {
+      return appointments;
+    }
+    return appointments.filter(
+      (appointment) => appointment?.service?.name === serviceFilter
+    );
+  }, [appointments, serviceFilter]);
+
+  const availableServices = useMemo(() => {
+    const services = new Set();
+    appointments.forEach((appointment) => {
+      if (appointment?.service?.name) {
+        services.add(appointment.service.name);
+      }
+    });
+    return Array.from(services).sort();
+  }, [appointments]);
+
   const updateStatus = async (id, status) => {
     await updateDoc(doc(db, "appointments", id), {
       status,
@@ -69,17 +100,30 @@ const AdminDashboard = () => {
       <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
         <label>Schedule date:</label>
         <input type="date" value={date} onChange={(event) => setDate(event.target.value)} />
+        <label>Service:</label>
+        <select
+          value={serviceFilter}
+          onChange={(event) => setServiceFilter(event.target.value)}
+          style={{ padding: "5px 8px" }}
+        >
+          <option value="">All Services</option>
+          {availableServices.map((service) => (
+            <option key={service} value={service}>
+              {service}
+            </option>
+          ))}
+        </select>
       </div>
 
       <p style={{ marginTop: "15px" }}>
-        Daily appointments: <strong>{appointments.length}</strong>
+        Daily appointments: <strong>{filteredAppointments.length}</strong>
       </p>
 
       {loading && <p>Loading schedules...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <div style={{ marginTop: "20px" }}>
-        {appointments.map((appointment) => {
+        {filteredAppointments.map((appointment) => {
           const usage = usageByTime[appointment.time] || 0;
 
           return (
@@ -110,6 +154,7 @@ const AdminDashboard = () => {
         })}
 
         {!loading && appointments.length === 0 && <p>No appointments for this day.</p>}
+        {!loading && appointments.length > 0 && filteredAppointments.length === 0 && <p>No appointments match the selected service.</p>}
       </div>
     </div>
   );

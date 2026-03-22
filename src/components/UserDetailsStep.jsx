@@ -3,10 +3,9 @@ import { useState } from "react";
 const UserDetailsStep = ({ onNext, onBack, isSubmitting = false }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [nationalId, setNationalId] = useState("");
 
   const handleNext = () => {
-    onNext({ name, phone, nationalId });
+    onNext({ name, phone });
   };
 
   return (
@@ -29,21 +28,13 @@ const UserDetailsStep = ({ onNext, onBack, isSubmitting = false }) => {
         style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
       />
 
-      <label>National ID:</label>
-      <input
-        type="text"
-        value={nationalId}
-        onChange={(e) => setNationalId(e.target.value)}
-        style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-      />
-
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <button onClick={onBack} style={{ marginRight: "10px" }}>
           Back
         </button>
         <button
           onClick={handleNext}
-          disabled={!name || !phone || !nationalId || isSubmitting}
+          disabled={!name || !phone || isSubmitting}
         >
           {isSubmitting ? "Saving..." : "Confirm Booking"}
         </button>
