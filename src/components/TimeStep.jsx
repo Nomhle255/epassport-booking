@@ -17,7 +17,7 @@ const generateTimeSlots = (duration) => {
   return slots;
 };
 
-const TimeStep = ({ service, onNext, onBack }) => {
+const TimeStep = ({ service, bookedSlots = {}, slotCapacity = 1, onNext, onBack }) => {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [slots, setSlots] = useState([]);
 
@@ -30,20 +30,27 @@ const TimeStep = ({ service, onNext, onBack }) => {
     <div>
       <h2>Select a Time Slot</h2>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
-        {slots.map((slot) => (
-          <button
-            key={slot}
-            onClick={() => setSelectedSlot(slot)}
-            style={{
-              padding: "10px 15px",
-              background: selectedSlot === slot ? "#007bff" : "#eee",
-              color: selectedSlot === slot ? "white" : "black",
-              cursor: "pointer",
-            }}
-          >
-            {slot}
-          </button>
-        ))}
+        {slots.map((slot) => {
+          const bookedCount = bookedSlots[slot] || 0;
+          const isFull = bookedCount >= slotCapacity;
+
+          return (
+            <button
+              key={slot}
+              onClick={() => setSelectedSlot(slot)}
+              disabled={isFull}
+              style={{
+                padding: "10px 15px",
+                background: selectedSlot === slot ? "#007bff" : "#eee",
+                color: selectedSlot === slot ? "white" : "black",
+                cursor: isFull ? "not-allowed" : "pointer",
+                opacity: isFull ? 0.5 : 1,
+              }}
+            >
+              {slot}
+            </button>
+          );
+        })}
       </div>
 
       <div style={{ marginTop: "20px" }}>
