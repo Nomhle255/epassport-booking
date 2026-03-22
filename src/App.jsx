@@ -1,22 +1,27 @@
 import { useState } from "react";
 import Booking from "./pages/Bookings";
 import AdminDashboard from "./pages/AdminDashboard";
+import ViewAppointmentStatus from "./pages/ViewAppointmentStatus";
+import CitizenPortal from "./pages/CitizenPortal";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
-  const [view, setView] = useState("citizen");
+  const [view, setView] = useState("landing");
+
+  const handleCitizen = () => setView("citizen-portal");
+  const handleAdmin = () => setView("admin");
+  const handleViewStatus = () => setView("status");
+  const handleBook = () => setView("booking");
+  const handleBack = () => setView("landing");
+  const handleBackToCitizen = () => setView("citizen-portal");
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>ePassport Booking</h1>
-      <p>
-        Reduce walk-in congestion with online booking, staff review, and reminder tracking.
-      </p>
-
-      <div style={{ display: "flex", gap: "10px" }}>
-        <button onClick={() => setView("admin")}>Admin Dashboard</button>
-      </div>
-
-      {view === "admin" ? <AdminDashboard /> : <Booking />}
+    <div>
+      {view === "landing" && <LandingPage onCitizen={handleCitizen} onAdmin={handleAdmin} />}
+      {view === "citizen-portal" && <CitizenPortal onViewStatus={handleViewStatus} onBook={handleBook} onBack={handleBack} />}
+      {view === "booking" && <Booking onBack={handleBackToCitizen} />}
+      {view === "status" && <ViewAppointmentStatus onBack={handleBackToCitizen} />}
+      {view === "admin" && <AdminDashboard onBack={handleBack} />}
     </div>
   );
 }

@@ -14,8 +14,9 @@ import DateStep from "../components/DateStep";
 import TimeStep from "../components/TimeStep";
 import UserDetailsStep from "../components/UserDetailsStep";
 import { db } from "../firebase/config";
+import '../styles/Bookings.css';
 
-const Booking = () => {
+const Booking = ({ onBack }) => {
   const [step, setStep] = useState(0);
   const [service, setService] = useState(null);
   const [date, setDate] = useState(null);
@@ -126,17 +127,32 @@ const Booking = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div className="bookings-page">
+      <button
+        onClick={onBack}
+        className="back-button"
+      >
+        ← Back
+      </button>
+      <div className="bookings-container">
+        <div className="bookings-header">
+          <h1>Booking Appointment</h1>
+          <p>Follow the steps below to book your appointment</p>
+        </div>
+        
+        {step === 2 && (
+          <div className="booking-legend">
+            <p><span className="booking-legend-icon">✓</span> Available dates are in light color</p>
+            <p><span className="booking-legend-icon">✗</span> Weekends and past dates are disabled</p>
+          </div>
+        )}
+
+        <div className="bookings-wrapper">
       {step === 0 && (
-        <div>
+        <div className="booking-intro">
           <p>Book your passport or ID appointment online</p>
           <button
-            style={{
-              padding: "15px 30px",
-              fontSize: "16px",
-              cursor: "pointer",
-              marginTop: "20px",
-            }}
+            className="start-booking-button"
             onClick={() => setStep(1)}
           >
             Start Booking
@@ -168,23 +184,41 @@ const Booking = () => {
         />
       )}
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       {step === 5 && (
-        <div>
+        <div className="booking-complete-container">
           <h2>Booking Complete!</h2>
-          <p>
-            Service: {service.name} <br />
-            Date: {date} <br />
-            Time: {time} <br />
-            Slot ID: {slotId} <br />
-            Name: {userDetails.name} <br />
-            Phone: {userDetails.phone} <br />
-            National ID: {userDetails.nationalId}
-          </p>
-          <p>Thank you for booking your appointment online!</p>
+          <div className="booking-details">
+            <p>
+              Service: {service.name} <br />
+              Date: {date} <br />
+              Time: {time} <br />
+              Slot ID: {slotId} <br />
+              Name: {userDetails.name} <br />
+              Phone: {userDetails.phone} <br />
+              Country: {userDetails.country}
+            </p>
+          </div>
+          <p className="booking-thank-you">Thank you for booking your appointment online!</p>
+          <button
+            onClick={() => {
+              setStep(0);
+              setService(null);
+              setDate(null);
+              setTime(null);
+              setUserDetails(null);
+              setSlotId("");
+              onBack();
+            }}
+            className="done-button"
+          >
+            Done
+          </button>
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 };
