@@ -130,16 +130,16 @@ const Booking = ({ onBack }) => {
       <button
         onClick={onBack}
         style={{
-          position: "absolute",
-          top: "20px",
-          left: "20px",
+          marginBottom: "20px",
           padding: "10px 20px",
           fontSize: "14px",
           cursor: "pointer",
-          backgroundColor: "#f5576c",
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
           color: "white",
           border: "none",
           borderRadius: "5px",
+          fontWeight: "bold",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
         }}
       >
         ← Back
@@ -214,7 +214,7 @@ const Booking = ({ onBack }) => {
               padding: "12px 30px",
               fontSize: "16px",
               cursor: "pointer",
-              backgroundColor: "#8b5cf6",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
               color: "white",
               border: "none",
               borderRadius: "5px",

@@ -78,12 +78,12 @@
 }
 
 .admin-button {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
 .admin-button:hover {
-  background: linear-gradient(135deg, #e67fea 0%, #e84453 100%);
+  background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
 }
 
 .landing-icon {

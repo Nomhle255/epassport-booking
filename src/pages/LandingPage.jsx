@@ -1,6 +1,6 @@
 import '../styles/LandingPage.css';
 
-export default function LandingPage({ onBooking, onAdmin }) {
+export default function LandingPage({ onCitizen, onAdmin }) {
   return (
     <div className="landing-page">
       <div className="landing-container">
@@ -12,10 +12,10 @@ export default function LandingPage({ onBooking, onAdmin }) {
         <div className="landing-buttons">
           <button
             className="landing-button citizen-button"
-            onClick={onBooking}
+            onClick={onCitizen}
           >
             <span className="landing-icon">👤</span>
-            Book Appointment
+            Click here to view and make a booking
           </button>
 
           <button
