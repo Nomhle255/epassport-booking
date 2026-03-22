@@ -14,6 +14,7 @@ import DateStep from "../components/DateStep";
 import TimeStep from "../components/TimeStep";
 import UserDetailsStep from "../components/UserDetailsStep";
 import { db } from "../firebase/config";
+import '../styles/Bookings.css';
 
 const Booking = ({ onBack }) => {
   const [step, setStep] = useState(0);
@@ -126,34 +127,32 @@ const Booking = ({ onBack }) => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div className="bookings-page">
       <button
         onClick={onBack}
-        style={{
-          marginBottom: "20px",
-          padding: "10px 20px",
-          fontSize: "14px",
-          cursor: "pointer",
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          fontWeight: "bold",
-          transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        }}
+        className="back-button"
       >
         ← Back
       </button>
+      <div className="bookings-container">
+        <div className="bookings-header">
+          <h1>Booking Appointment</h1>
+          <p>Follow the steps below to book your appointment</p>
+        </div>
+        
+        {step === 2 && (
+          <div className="booking-legend">
+            <p><span className="booking-legend-icon">✓</span> Available dates are in light color</p>
+            <p><span className="booking-legend-icon">✗</span> Weekends and past dates are disabled</p>
+          </div>
+        )}
+
+        <div className="bookings-wrapper">
       {step === 0 && (
-        <div>
+        <div className="booking-intro">
           <p>Book your passport or ID appointment online</p>
           <button
-            style={{
-              padding: "15px 30px",
-              fontSize: "16px",
-              cursor: "pointer",
-              marginTop: "20px",
-            }}
+            className="start-booking-button"
             onClick={() => setStep(1)}
           >
             Start Booking
@@ -185,21 +184,23 @@ const Booking = ({ onBack }) => {
         />
       )}
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       {step === 5 && (
-        <div>
+        <div className="booking-complete-container">
           <h2>Booking Complete!</h2>
-          <p>
-            Service: {service.name} <br />
-            Date: {date} <br />
-            Time: {time} <br />
-            Slot ID: {slotId} <br />
-            Name: {userDetails.name} <br />
-            Phone: {userDetails.phone} <br />
-            Country: {userDetails.country}
-          </p>
-          <p>Thank you for booking your appointment online!</p>
+          <div className="booking-details">
+            <p>
+              Service: {service.name} <br />
+              Date: {date} <br />
+              Time: {time} <br />
+              Slot ID: {slotId} <br />
+              Name: {userDetails.name} <br />
+              Phone: {userDetails.phone} <br />
+              Country: {userDetails.country}
+            </p>
+          </div>
+          <p className="booking-thank-you">Thank you for booking your appointment online!</p>
           <button
             onClick={() => {
               setStep(0);
@@ -210,22 +211,14 @@ const Booking = ({ onBack }) => {
               setSlotId("");
               onBack();
             }}
-            style={{
-              padding: "12px 30px",
-              fontSize: "16px",
-              cursor: "pointer",
-              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              marginTop: "20px",
-              fontWeight: "bold",
-            }}
+            className="done-button"
           >
             Done
           </button>
         </div>
       )}
+        </div>
+      </div>
     </div>
   );
 };

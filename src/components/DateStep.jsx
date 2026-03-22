@@ -98,12 +98,6 @@ const DateStep = ({ onNext, onBack }) => {
         })}
       </div>
 
-      {/* Legend */}
-      <div className="calendar-legend">
-        <p>✓ Available dates are in light color</p>
-        <p>✗ Weekends and past dates are disabled</p>
-      </div>
-
       <div className="date-step-buttons">
         <button onClick={onBack}>Back</button>
         <button onClick={() => onNext(selectedDate)} disabled={!selectedDate}>
