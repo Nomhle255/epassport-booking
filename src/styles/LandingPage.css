@@ -1,0 +1,117 @@
+.landing-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.landing-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.landing-header {
+  margin-bottom: 50px;
+}
+
+.landing-header h1 {
+  font-size: 36px;
+  color: #333;
+  margin: 0 0 10px 0;
+  font-weight: bold;
+}
+
+.landing-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.landing-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.landing-button {
+  flex: 1;
+  min-width: 200px;
+  padding: 20px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.landing-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.citizen-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.citizen-button:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+}
+
+.admin-button {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.admin-button:hover {
+  background: linear-gradient(135deg, #e67fea 0%, #e84453 100%);
+}
+
+.landing-icon {
+  font-size: 24px;
+}
+
+.landing-subtitle {
+  margin-top: 40px;
+  font-size: 13px;
+  color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .landing-container {
+    padding: 40px 25px;
+  }
+
+  .landing-header h1 {
+    font-size: 28px;
+  }
+
+  .landing-buttons {
+    flex-direction: column;
+  }
+
+  .landing-button {
+    width: 100%;
+    min-width: auto;
+  }
+}

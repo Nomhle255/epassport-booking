@@ -1,22 +1,20 @@
 import { useState } from "react";
 import Booking from "./pages/Bookings";
 import AdminDashboard from "./pages/AdminDashboard";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
-  const [view, setView] = useState("citizen");
+  const [view, setView] = useState("landing");
+
+  const handleBooking = () => setView("citizen");
+  const handleAdmin = () => setView("admin");
+  const handleBack = () => setView("landing");
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>ePassport Booking</h1>
-      <p>
-        Reduce walk-in congestion with online booking, staff review, and reminder tracking.
-      </p>
-
-      <div style={{ display: "flex", gap: "10px" }}>
-        <button onClick={() => setView("admin")}>Admin Dashboard</button>
-      </div>
-
-      {view === "admin" ? <AdminDashboard /> : <Booking />}
+    <div>
+      {view === "landing" && <LandingPage onBooking={handleBooking} onAdmin={handleAdmin} />}
+      {view === "citizen" && <Booking onBack={handleBack} />}
+      {view === "admin" && <AdminDashboard onBack={handleBack} />}
     </div>
   );
 }

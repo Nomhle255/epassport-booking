@@ -15,7 +15,7 @@ import TimeStep from "../components/TimeStep";
 import UserDetailsStep from "../components/UserDetailsStep";
 import { db } from "../firebase/config";
 
-const Booking = () => {
+const Booking = ({ onBack }) => {
   const [step, setStep] = useState(0);
   const [service, setService] = useState(null);
   const [date, setDate] = useState(null);
@@ -127,6 +127,23 @@ const Booking = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <button
+        onClick={onBack}
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          padding: "10px 20px",
+          fontSize: "14px",
+          cursor: "pointer",
+          backgroundColor: "#f5576c",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+        }}
+      >
+        ← Back
+      </button>
       {step === 0 && (
         <div>
           <p>Book your passport or ID appointment online</p>
@@ -183,6 +200,30 @@ const Booking = () => {
             Country: {userDetails.country}
           </p>
           <p>Thank you for booking your appointment online!</p>
+          <button
+            onClick={() => {
+              setStep(0);
+              setService(null);
+              setDate(null);
+              setTime(null);
+              setUserDetails(null);
+              setSlotId("");
+              onBack();
+            }}
+            style={{
+              padding: "12px 30px",
+              fontSize: "16px",
+              cursor: "pointer",
+              backgroundColor: "#8b5cf6",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              marginTop: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            Done
+          </button>
         </div>
       )}
     </div>

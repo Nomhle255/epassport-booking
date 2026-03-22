@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ onBack }) => {
   // Helper function to format date as local YYYY-MM-DD string
   const formatLocalDate = (dateInput) => {
     if (typeof dateInput === "string") return dateInput;
@@ -95,6 +95,21 @@ const AdminDashboard = () => {
 
   return (
     <div style={{ maxWidth: "980px", margin: "30px auto", textAlign: "left" }}>
+      <button
+        onClick={onBack}
+        style={{
+          marginBottom: "20px",
+          padding: "10px 20px",
+          fontSize: "14px",
+          cursor: "pointer",
+          backgroundColor: "#f5576c",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+        }}
+      >
+        ← Back
+      </button>
       <h2>Admin Dashboard</h2>
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>

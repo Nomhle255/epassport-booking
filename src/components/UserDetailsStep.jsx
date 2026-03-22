@@ -1,35 +1,6 @@
 import { useState } from "react";
-
-// Country-specific phone validation and formatting
-const COUNTRIES = {
-  SA: {
-    name: "South Africa",
-    formats: ["0123456789", "+27123456789"],
-    placeholder: "0123456789 or +27123456789",
-    regex: [/^0\d{9}$/, /^\+27\d{9}$/],
-  },
-  LS: {
-    name: "Lesotho",
-    formats: ["22123456", "51234567", "61234567"],
-    placeholder: "22123456, 51234567, or 61234567",
-    regex: [/^[256]\d{7}$/, /^\+266\d{8}$/],
-  },
-  NG: {
-    name: "Nigeria",
-    formats: ["01234567890", "+2341234567890"],
-    placeholder: "01234567890 or +2341234567890",
-    regex: [/^0\d{10}$/, /^\+234\d{10}$/],
-  },
-};
-
-const isValidPhoneNumber = (phoneNumber, country) => {
-  if (!country || !COUNTRIES[country]) return false;
-  
-  const cleaned = phoneNumber.replace(/[\s\-\(\)]/g, "");
-  const regexPatterns = COUNTRIES[country].regex;
-  
-  return regexPatterns.some((pattern) => pattern.test(cleaned));
-};
+import { COUNTRIES, isValidPhoneNumber } from "../utils/phoneValidation";
+import "../styles/UserDetailsStep.css";
 
 const UserDetailsStep = ({ onNext, onBack, isSubmitting = false }) => {
   const [name, setName] = useState("");
@@ -63,74 +34,58 @@ const UserDetailsStep = ({ onNext, onBack, isSubmitting = false }) => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto", textAlign: "left" }}>
+    <div className="user-details-container">
       <h2>Enter Your Details</h2>
 
-      <label>Name:</label>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
-      />
+      <div className="form-group">
+        <label>Name:</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
 
-      <label>Country:</label>
-      <select
-        value={country}
-        onChange={(e) => {
-          setCountry(e.target.value);
-          setPhone("");
-          setPhoneError("");
-        }}
-        style={{
-          width: "100%",
-          padding: "8px",
-          marginBottom: "10px",
-          borderColor: !country ? "#ccc" : "#ccc",
-          borderWidth: "1px",
-          borderStyle: "solid",
-        }}
-      >
-        <option value="">Select Your Country</option>
-        {Object.entries(COUNTRIES).map(([code, data]) => (
-          <option key={code} value={code}>
-            {data.name}
-          </option>
-        ))}
-      </select>
+      <div className="form-group country-select-group">
+        <label>Country:</label>
+        <select
+          value={country}
+          onChange={(e) => {
+            setCountry(e.target.value);
+            setPhone("");
+            setPhoneError("");
+          }}
+        >
+          <option value="">Select Your Country</option>
+          {Object.entries(COUNTRIES).map(([code, data]) => (
+            <option key={code} value={code}>
+              {data.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {country && (
-        <>
+        <div className="form-group">
           <label>Phone Number:</label>
           <input
             type="tel"
             value={phone}
             onChange={handlePhoneChange}
             placeholder={countryData?.placeholder}
-            style={{
-              width: "100%",
-              padding: "8px",
-              marginBottom: "5px",
-              borderColor: phoneError ? "#dc3545" : "#ccc",
-              borderWidth: "1px",
-              borderStyle: "solid",
-            }}
+            className={phoneError ? "error" : ""}
           />
           {phoneError && (
-            <p style={{ color: "#dc3545", fontSize: "12px", margin: "0 0 10px 0" }}>
-              {phoneError}
-            </p>
+            <p className="error-message">{phoneError}</p>
           )}
-          <p style={{ fontSize: "12px", color: "#666", marginBottom: "10px" }}>
+          <p className="form-hint">
             Your phone number will be used to send appointment reminders via SMS.
           </p>
-        </>
+        </div>
       )}
 
-      <div style={{ marginTop: "20px", textAlign: "center" }}>
-        <button onClick={onBack} style={{ marginRight: "10px" }}>
-          Back
-        </button>
+      <div className="buttons-group">
+        <button onClick={onBack}>Back</button>
         <button
           onClick={handleNext}
           disabled={!isFormValid || isSubmitting}

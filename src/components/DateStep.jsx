@@ -1,67 +1,112 @@
 import { useState } from "react";
-
-// Helper function to format date as local YYYY-MM-DD string
-const formatLocalDate = (date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
-// Helper function to get next 30 weekdays (excluding Saturday and Sunday)
-const getNext30Days = () => {
-  const dates = [];
-  const today = new Date();
-  let i = 0;
-  while (dates.length < 30) {
-    const date = new Date();
-    date.setDate(today.getDate() + i);
-    const day = date.getDay();
-    // Exclude Saturday (6) and Sunday (0)
-    if (day !== 0 && day !== 6) {
-      dates.push(date);
-    }
-    i++;
-  }
-  return dates;
-};
+import { formatLocalDate, getNext30Days, getDaysInMonth, getFirstDayOfMonth } from "../utils/dateUtils";
+import "../styles/DateStep.css";
 
 const DateStep = ({ onNext, onBack }) => {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  
   const availableDates = getNext30Days();
+  const availableDateStrings = new Set(availableDates.map(formatLocalDate));
+
+  // Generate calendar grid for the current month
+  const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+  const firstDay = getFirstDayOfMonth(currentYear, currentMonth);
+  const calendarDays = [];
+
+  // Add empty cells for days before the month starts
+  for (let i = 0; i < firstDay; i++) {
+    calendarDays.push(null);
+  }
+
+  // Add days of the month
+  for (let day = 1; day <= daysInMonth; day++) {
+    calendarDays.push(day);
+  }
+
+  const monthName = new Date(currentYear, currentMonth).toLocaleString("default", { month: "long", year: "numeric" });
+
+  const handlePrevMonth = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear(currentYear - 1);
+    } else {
+      setCurrentMonth(currentMonth - 1);
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear(currentYear + 1);
+    } else {
+      setCurrentMonth(currentMonth + 1);
+    }
+  };
+
+  const isDateAvailable = (day) => {
+    if (!day) return false;
+    const dateStr = formatLocalDate(new Date(currentYear, currentMonth, day));
+    return availableDateStrings.has(dateStr);
+  };
+
+  const handleDateClick = (day) => {
+    if (isDateAvailable(day)) {
+      const dateStr = formatLocalDate(new Date(currentYear, currentMonth, day));
+      setSelectedDate(dateStr);
+    }
+  };
 
   return (
-    <div>
+    <div className="date-step-container">
       <h2>Select a Date</h2>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-        {availableDates.map((date) => {
-          const dateStr = formatLocalDate(date); // Local YYYY-MM-DD
+
+      {/* Month Navigation */}
+      <div className="month-navigation">
+        <button onClick={handlePrevMonth}>&lt; Prev</button>
+        <h3>{monthName}</h3>
+        <button onClick={handleNextMonth}>Next &gt;</button>
+      </div>
+
+      {/* Day Headers */}
+      <div className="day-headers">
+        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+          <div key={day} className="day-header">
+            {day}
+          </div>
+        ))}
+      </div>
+
+      {/* Calendar Days */}
+      <div className="calendar-grid">
+        {calendarDays.map((day, index) => {
+          const isAvailable = isDateAvailable(day);
+          const dateStr = day ? formatLocalDate(new Date(currentYear, currentMonth, day)) : null;
+          const isSelected = selectedDate === dateStr;
+
           return (
             <button
-              key={dateStr}
-              onClick={() => setSelectedDate(dateStr)}
-              style={{
-                padding: "10px",
-                minWidth: "100px",
-                background: selectedDate === dateStr ? "#007bff" : "#eee",
-                color: selectedDate === dateStr ? "white" : "black",
-                cursor: "pointer",
-              }}
+              key={index}
+              onClick={() => handleDateClick(day)}
+              disabled={!isAvailable}
+              className={`calendar-day-button ${isSelected ? "selected" : ""}`}
             >
-              {date.toDateString()}
+              {day}
             </button>
           );
         })}
       </div>
 
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={onBack} style={{ marginRight: "10px" }}>
-          Back
-        </button>
-        <button
-          onClick={() => onNext(selectedDate)}
-          disabled={!selectedDate}
-        >
+      {/* Legend */}
+      <div className="calendar-legend">
+        <p>✓ Available dates are in light color</p>
+        <p>✗ Weekends and past dates are disabled</p>
+      </div>
+
+      <div className="date-step-buttons">
+        <button onClick={onBack}>Back</button>
+        <button onClick={() => onNext(selectedDate)} disabled={!selectedDate}>
           Next
         </button>
       </div>
