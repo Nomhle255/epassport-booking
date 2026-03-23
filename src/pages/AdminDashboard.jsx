@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 
-const AdminDashboard = ({ onBack }) => {
+const AdminDashboard = ({ onBack, onLogout }) => {
   // Helper function to format date as local YYYY-MM-DD string
   const formatLocalDate = (dateInput) => {
     if (typeof dateInput === "string") return dateInput;
@@ -95,23 +95,42 @@ const AdminDashboard = ({ onBack }) => {
 
   return (
     <div style={{ maxWidth: "980px", margin: "30px auto", textAlign: "left" }}>
-      <button
-        onClick={onBack}
-        style={{
-          marginBottom: "20px",
-          padding: "10px 20px",
-          fontSize: "14px",
-          cursor: "pointer",
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          fontWeight: "bold",
-          transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        }}
-      >
-        ← Back
-      </button>
+      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+        <button
+          onClick={onBack}
+          style={{
+            padding: "10px 20px",
+            fontSize: "14px",
+            cursor: "pointer",
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            fontWeight: "bold",
+            transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          }}
+        >
+          ← Back
+        </button>
+        {onLogout && (
+          <button
+            onClick={onLogout}
+            style={{
+              padding: "10px 20px",
+              fontSize: "14px",
+              cursor: "pointer",
+              background: "#e74c3c",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontWeight: "bold",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+            }}
+          >
+            Logout
+          </button>
+        )}
+      </div>
       <h2>Admin Dashboard</h2>
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
@@ -157,7 +176,7 @@ const AdminDashboard = ({ onBack }) => {
                 <strong>{appointment.time}</strong> - {appointment?.service?.name}
               </p>
               <p style={{ margin: "6px 0" }}>
-                Citizen: {appointment?.userDetails?.name} | Phone: {appointment?.userDetails?.phone}
+                Names: {appointment?.userDetails?.name} | Phone number: {appointment?.userDetails?.phone}
               </p>
               <p style={{ margin: "6px 0" }}>
                 Status: <strong>{appointment.status || "pending"}</strong>

@@ -80,7 +80,7 @@ export default function ViewAppointmentStatus({ onBack }) {
       </button>
 
       <div className="view-appointment-container">
-        <h1>View Appointment Status</h1>
+        <h3>View Appointment Status</h3>
         <p className="subtitle">Enter your phone number to check your appointment</p>
 
         <form onSubmit={handleSearch} className="search-form">
@@ -132,16 +132,8 @@ export default function ViewAppointmentStatus({ onBack }) {
                     <span className="value">{appointment.time}</span>
                   </div>
                   <div className="detail-row">
-                    <span className="label">Slot ID:</span>
-                    <span className="value">{appointment.slotId}</span>
-                  </div>
-                  <div className="detail-row">
                     <span className="label">Name:</span>
                     <span className="value">{appointment.userDetails?.name}</span>
-                  </div>
-                  <div className="detail-row">
-                    <span className="label">Country:</span>
-                    <span className="value">{appointment.userDetails?.country}</span>
                   </div>
                   {appointment.status === "denied" && appointment.denialReason && (
                     <div className="detail-row denial">
