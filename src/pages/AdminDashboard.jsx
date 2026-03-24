@@ -184,8 +184,18 @@ const AdminDashboard = ({ onBack, onLogout }) => {
                 Status: <strong>{appointment.status || "pending"}</strong>
               </p>
               <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                <button onClick={() => updateStatus(appointment.id, "approved")}>Approve</button>
-                <button onClick={() => updateStatus(appointment.id, "denied")}>Deny</button>
+                <button 
+                  onClick={() => updateStatus(appointment.id, "approved")}
+                  className="btn-approve"
+                >
+                  Approve
+                </button>
+                <button 
+                  onClick={() => updateStatus(appointment.id, "denied")}
+                  className="btn-deny"
+                >
+                  Deny
+                </button>
               </div>
             </div>
           );

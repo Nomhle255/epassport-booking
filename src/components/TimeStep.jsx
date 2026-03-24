@@ -70,7 +70,30 @@ const TimeStep = ({ service, bookedSlots = {}, slotCapacity = 1, onNext, onBack 
 
       {/* Buttons */}
       <div className="time-step-buttons">
-        <button onClick={onBack}>Back</button>
+        <button 
+          onClick={onBack}
+          style={{
+            padding: "12px 30px",
+            fontSize: "16px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 5px 15px rgba(102, 126, 234, 0.4)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = "translateY(0)";
+            e.target.style.boxShadow = "none";
+          }}
+        >
+          ← Back
+        </button>
         <button onClick={() => onNext(selectedSlot)} disabled={!selectedSlot}>
           Next
         </button>

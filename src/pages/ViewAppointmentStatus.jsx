@@ -74,7 +74,20 @@ export default function ViewAppointmentStatus({ onBack }) {
     <div className="view-appointment-page">
       <button
         onClick={onBack}
-        className="back-button"
+        style={{
+          padding: "10px 20px",
+          fontSize: "14px",
+          cursor: "pointer",
+          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          fontWeight: "bold",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          marginBottom: "20px",
+          display: "block",
+          width: "fit-content",
+        }}
       >
         ← Back
       </button>

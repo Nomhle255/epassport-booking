@@ -37,6 +37,30 @@ const ServiceStep = ({ onNext }) => {
       <button
         disabled={!selectedService}
         onClick={() => onNext(selectedService)}
+        style={{
+          padding: "12px 30px",
+          fontSize: "16px",
+          fontWeight: "bold",
+          cursor: selectedService ? "pointer" : "not-allowed",
+          background: selectedService
+            ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            : "#ccc",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          transition: "all 0.3s ease",
+          opacity: selectedService ? 1 : 0.6,
+        }}
+        onMouseEnter={(e) => {
+          if (selectedService) {
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 5px 15px rgba(102, 126, 234, 0.4)";
+          }
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.transform = "translateY(0)";
+          e.target.style.boxShadow = "none";
+        }}
       >
         Next
       </button>
