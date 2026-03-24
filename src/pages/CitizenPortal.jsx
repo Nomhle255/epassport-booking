@@ -4,7 +4,13 @@ export default function CitizenPortal({ onViewStatus, onBook, onBack }) {
   return (
     <div className="citizen-portal-page">
       <div className="citizen-portal-wrapper">
-       
+        <button
+          onClick={onBack}
+          className="back-button"
+        >
+          ← Back
+        </button>
+
         <div className="citizen-portal-container">
           <div className="portal-header">
             <h1>Citizen Portal</h1>

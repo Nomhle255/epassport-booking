@@ -9,6 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
+import '../styles/AdminDashboard.css';
 
 const AdminDashboard = ({ onBack, onLogout }) => {
   // Helper function to format date as local YYYY-MM-DD string
@@ -94,8 +95,9 @@ const AdminDashboard = ({ onBack, onLogout }) => {
   };
 
   return (
-    <div style={{ maxWidth: "980px", margin: "30px auto", textAlign: "left" }}>
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+    <div className="admin-dashboard-page">
+      <div className="admin-dashboard-wrapper">
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
         <button
           onClick={onBack}
           style={{
@@ -191,6 +193,7 @@ const AdminDashboard = ({ onBack, onLogout }) => {
 
         {!loading && appointments.length === 0 && <p>No appointments for this day.</p>}
         {!loading && appointments.length > 0 && filteredAppointments.length === 0 && <p>No appointments match the selected service.</p>}
+      </div>
       </div>
     </div>
   );

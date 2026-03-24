@@ -78,9 +78,6 @@ const UserDetailsStep = ({ onNext, onBack, isSubmitting = false }) => {
           {phoneError && (
             <p className="error-message">{phoneError}</p>
           )}
-          <p className="form-hint">
-            Your phone number will be used to send appointment reminders via SMS.
-          </p>
         </div>
       )}
 

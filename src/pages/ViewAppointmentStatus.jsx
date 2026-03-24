@@ -158,6 +158,28 @@ export default function ViewAppointmentStatus({ onBack }) {
             ))}
           </div>
         )}
+
+        <div style={{ marginTop: "30px", display: "flex", gap: "10px", justifyContent: "center" }}>
+          <button
+            onClick={onBack}
+            className="finish-button"
+            style={{
+              padding: "12px 30px",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              fontSize: "16px",
+              fontWeight: "bold",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => e.target.style.transform = "translateY(-2px)"}
+            onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}
+          >
+            Finish
+          </button>
+        </div>
       </div>
     </div>
   );

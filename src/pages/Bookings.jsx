@@ -194,7 +194,6 @@ const Booking = ({ onBack }) => {
               Service: {service.name} <br />
               Date: {date} <br />
               Time: {time} <br />
-              Slot ID: {slotId} <br />
               Name: {userDetails.name} <br />
               Phone: {userDetails.phone} <br />
               Country: {userDetails.country}
